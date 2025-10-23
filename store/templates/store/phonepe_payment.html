@@ -1,0 +1,19 @@
+{% extends "store/base.html" %}
+{% block content %}
+<div class="container my-5 text-center">
+    <h3>Redirecting to PhonePe...</h3>
+    <p>Order ID: {{ order_id }}</p>
+    <p>Amount: ₹{{ amount }}</p>
+    <p class="text-muted">This is a sandbox/dummy payment simulation.</p>
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<script>
+    // Simulate payment success after 3 seconds
+    setTimeout(function() {
+        window.location.href = "{% url 'invoice_pdf' %}";
+    }, 3000);
+</script>
+{% endblock %}

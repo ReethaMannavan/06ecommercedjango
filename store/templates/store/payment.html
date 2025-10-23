@@ -1,0 +1,9 @@
+{% extends "store/base.html" %}
+{% block content %}
+<h2 class="mb-4">Payment</h2>
+<p>This is a dummy payment page. Real payment integration (Razorpay/PhonePe) can be added later.</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-success">Pay Now</button>
+</form>
+{% endblock %}

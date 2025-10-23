@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vetri E-Commerce</title>
+
+    {% load static %}
+
+    <!-- Bootstrap CSS via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-..." crossorigin="anonymous">
+
+    <!-- Custom CSS -->
+    <link href="{% static 'store/css/custom.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{% url 'home' %}">Vetri Shopify</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% for category in categories %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category_products' category.slug %}">{{ category.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+
+            <!-- Search -->
+            <form class="d-flex me-3" method="get" action="{% url 'home' %}">
+                <input class="form-control me-2" type="search" placeholder="Search products" name="q" value="{{ request.GET.q }}">
+                <button class="btn btn-outline-light" type="submit">Search</button>
+            </form>
+
+            <!-- Cart -->
+            <a class="nav-link text-white" href="{% url 'cart' %}">
+    🛒 Cart 
+    {% if cart_count > 0 %}
+        <span class="badge bg-danger">{{ cart_count }}</span>
+    {% endif %}
+</a>
+
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container my-4">
+    {% block content %}{% endblock %}
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    &copy; 2025 Vetri Tech E-Commerce. All rights reserved.
+</footer>
+
+<!-- Bootstrap JS via CDN -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+
+</body>
+</html>

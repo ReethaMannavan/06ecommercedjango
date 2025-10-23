@@ -1,0 +1,52 @@
+{% extends "store/base.html" %}
+{% load static %}
+{% block content %}
+<h2 class="mb-4">{{ category.name }} Products</h2>
+<div class="row">
+    {% for product in products %}
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card h-100 shadow-sm">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+            {% else %}
+            <img src="{% static 'store/images/placeholder.png' %}" class="card-img-top" alt="Placeholder">
+            {% endif %}
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p>
+                   
+                   {% for i in product.stars %}
+    {% if i <= product.int_rating %}
+        <span class="text-warning">&#9733;</span>
+    {% else %}
+        <span class="text-muted">&#9733;</span>
+    {% endif %}
+{% endfor %}
+                </p>
+                <p class="fw-bold">₹{{ product.price_with_gst }}</p>
+                <a href="{% url 'add_to_cart' product.id %}" class="btn btn-custom mt-auto">Add to Cart</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Pagination -->
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center">
+    {% if products.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">&laquo;</a></li>
+    {% endif %}
+    {% for num in products.paginator.page_range %}
+      {% if products.number == num %}
+        <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+      {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if products.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">&raquo;</a></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endblock %}
